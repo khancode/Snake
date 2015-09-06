@@ -24,8 +24,14 @@ function Food()
 
         this.respawn = function() {
 
-            x = Math.floor((Math.random() * 10) + 1);
-            y = Math.floor((Math.random() * 10) + 1);
+            var lowerBound = 0;
+            var upperBound = 9;
+            x = Math.floor((Math.random() * upperBound) + lowerBound);
+            y = Math.floor((Math.random() * upperBound) + lowerBound);
+        };
+
+        this.getPosition = function() {
+            return {'x':x, 'y':y };
         };
 
         this.getX = function() { return x; };

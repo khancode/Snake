@@ -19,9 +19,20 @@ var snake = new $snake.Create();
 
 var food = new $food.Create();
 
-console.log('init');
-food.print();
+var ground = new $ground.Create();
+ground.print();
 
-console.log('respawn');
-food.respawn();
-food.print();
+ground.refresh(snake.getPositionArr(), food.getPosition());
+ground.print();
+
+snake.move();
+ground.refresh(snake.getPositionArr(), food.getPosition());
+ground.print();
+
+snake.move();
+ground.refresh(snake.getPositionArr(), food.getPosition());
+ground.print();
+
+snake.move();
+ground.refresh(snake.getPositionArr(), food.getPosition());
+ground.print();

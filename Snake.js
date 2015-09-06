@@ -49,16 +49,16 @@ function Snake()
             switch (direction)
             {
                 case LEFT:
-                    xDiff = -1;
-                    break;
-                case RIGHT:
-                    xDiff = 1;
-                    break;
-                case UP:
                     yDiff = -1;
                     break;
-                case DOWN:
+                case RIGHT:
                     yDiff = 1;
+                    break;
+                case UP:
+                    xDiff = -1;
+                    break;
+                case DOWN:
+                    xDiff = 1;
                     break;
             }
 
@@ -102,6 +102,21 @@ function Snake()
             direction = newDirection;
         };
 
+        /* Returns an array of all square positions of a snake */
+        this.getPositionArr = function() {
+
+            var positions = [];
+
+            var cur = head;
+            while (cur != null)
+            {
+                positions.push(cur.getPosition());
+                cur = cur.getNext();
+            }
+
+            return positions;
+        };
+
         this.print = function() {
             console.log('Head:');
             var cur = head;
@@ -141,6 +156,10 @@ function Snake()
                         '\tprev: ' + prevId + ',\n' +
                         '\tnext: ' + nextId + ',\n' +
                     ']';
+        };
+
+        this.getPosition = function() {
+            return { 'x':x, 'y':y };
         };
 
         this.getX = function() { return x; };
