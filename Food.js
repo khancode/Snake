@@ -22,12 +22,32 @@ function Food()
             console.log('food initialized! :D');
         }
 
-        this.respawn = function() {
+        this.respawn = function(snakePositionArr) {
 
             var lowerBound = 0;
             var upperBound = 9;
-            x = Math.floor((Math.random() * upperBound) + lowerBound);
-            y = Math.floor((Math.random() * upperBound) + lowerBound);
+
+            var newX;
+            var newY;
+            var validPosition = true;
+            do
+            {
+                newX = Math.floor((Math.random() * upperBound) + lowerBound);
+                newY = Math.floor((Math.random() * upperBound) + lowerBound);
+
+                for (var i in snakePositionArr) {
+                    var pos = snakePositionArr[i];
+
+                    if (newX == pos.x && newY == pos.y) {
+                        validPosition = false;
+                        break;
+                    }
+                }
+
+            } while (validPosition == false);
+
+            x = newX;
+            y = newY;
         };
 
         this.getPosition = function() {

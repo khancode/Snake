@@ -13,6 +13,7 @@ function Ground()
     var SNAKE = 'S';
     var FOOD = 'F';
     var EMPTY = '_';
+    var WALL = 'W';
 
     /*
         Creates a new object for ground
@@ -31,9 +32,25 @@ function Ground()
                 gridArr[i] = new Array(WIDTH);
 
             clearGrid();
-
-            console.log('ground initialized! :D');
         }
+
+        this.checkCollision = function(position) {
+            var state;
+
+            if (position.x < 0 || position.x > 9 || position.y < 0 || position.y > 9)
+                state = WALL;
+            else
+                state = gridArr[position.x][position.y];
+
+            if (state == EMPTY)
+                return $game.GOOD_STATE;
+            else if (state == FOOD)
+                return $game.FOOD_STATE;
+            else if (state == SNAKE || state == WALL)
+                return $game.BAD_STATE;
+            else
+                throw "This is not a valid state '" + state + "'";
+        };
 
         this.refresh = function(snakePositionArr, foodPosition) {
             clearGrid();

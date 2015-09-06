@@ -53,14 +53,9 @@ function Snake()
                     setDirection(DOWN);
                 }
             };
-
-            console.log('snaked initialized! :D');
         }
 
-        this.getMoveCompleted = function() { return moveCompleted; };
-
-        this.move = function () {
-
+        this.determineNextMove = function() {
             var xDiff = 0;
             var yDiff = 0;
 
@@ -83,12 +78,24 @@ function Snake()
             var xPosNewHead = head.getX() + xDiff;
             var yPosNewHead = head.getY() + yDiff;
 
+            return {'x':xPosNewHead, 'y':yPosNewHead};
+        };
+
+        this.move = function (newHeadPosition) {
             push(dequeue());
 
-            head.setX(xPosNewHead);
-            head.setY(yPosNewHead);
+            head.setX(newHeadPosition.x);
+            head.setY(newHeadPosition.y);
+        };
 
-            console.log('move successful');
+        this.addSquare = function(newHeadPosition) {
+            var newHead = new Square(newHeadPosition.x, newHeadPosition.y);
+
+            head.setPrev(newHead);
+            newHead.setPrev(null);
+            newHead.setNext(head);
+
+            head = newHead;
         };
 
         function dequeue() {
@@ -112,7 +119,6 @@ function Snake()
         }
 
         function setDirection(newDirection) {
-
             if (newDirection != LEFT && newDirection != RIGHT && newDirection != UP && newDirection != DOWN)
                 throw "Not a valid direction input '" + newDirection + "'\n" +
                       'Valid values are: ' + LEFT + ', ' + RIGHT + ', ' + UP + ', ' + DOWN;
@@ -128,7 +134,6 @@ function Snake()
 
         /* Returns an array of all square positions of a snake */
         this.getPositionArr = function() {
-
             var positions = [];
 
             var cur = head;
@@ -158,16 +163,15 @@ function Snake()
         Creates a new object
             FYI: Represents a node
     */
-    function Square(x, y) {
-        var x = x;
-        var y = y;
+    function Square(xPos, yPos) {
+        var x = xPos;
+        var y = yPos;
         var prev = null;
         var next = null;
 
         var id = squareCounter++;
 
         this.info = function() {
-
             var prevId = null, nextId = null;
             if(prev != null)
                 prevId = prev.getId();
