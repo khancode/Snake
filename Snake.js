@@ -1,5 +1,5 @@
 /**
- * Created by khanc on 9/5/2015.
+ * Created by khancode on 9/5/2015.
  */
 
 var $snake = new Snake();
@@ -24,6 +24,8 @@ function Snake()
         var tail;
         var direction;
 
+        var moveCompleted;
+
         init();
 
         function init() {
@@ -36,10 +38,26 @@ function Snake()
             mid.setNext(tail);
             tail.setPrev(mid);
 
-            direction = 'right';
+            direction = 'left';
+
+            window.onkeydown = function (e) {
+
+                var code = e.keyCode ? e.keyCode : e.which;
+                if (code == 37)
+                    setDirection(LEFT);
+                else if (code == 39)
+                    setDirection(RIGHT);
+                else if (code === 38) { //up key
+                    setDirection(UP);
+                } else if (code === 40) { //down key
+                    setDirection(DOWN);
+                }
+            };
 
             console.log('snaked initialized! :D');
         }
+
+        this.getMoveCompleted = function() { return moveCompleted; };
 
         this.move = function () {
 
@@ -93,14 +111,20 @@ function Snake()
             head = newHead;
         }
 
-        this.setDirection = function(newDirection) {
+        function setDirection(newDirection) {
 
             if (newDirection != LEFT && newDirection != RIGHT && newDirection != UP && newDirection != DOWN)
                 throw "Not a valid direction input '" + newDirection + "'\n" +
                       'Valid values are: ' + LEFT + ', ' + RIGHT + ', ' + UP + ', ' + DOWN;
 
+            if ( (direction == LEFT && newDirection == RIGHT) ||
+                 (direction == RIGHT && newDirection == LEFT) ||
+                 (direction == UP && newDirection == DOWN) ||
+                 (direction == DOWN && newDirection == UP)   )
+                return;
+
             direction = newDirection;
-        };
+        }
 
         /* Returns an array of all square positions of a snake */
         this.getPositionArr = function() {
