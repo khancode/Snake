@@ -17,6 +17,7 @@ function Game()
         var snake;
         var food;
         var ground;
+        var draw;
         var speed; // in milliseconds
         var timer;
         var score;
@@ -27,7 +28,8 @@ function Game()
             snake = new $snake.Create();
             food = new $food.Create();
             ground = new $ground.Create();
-            speed = 500;
+            draw = new $draw.Create();
+            speed = 80;
             timer = null;
             score = 0;
 
@@ -48,27 +50,30 @@ function Game()
         }
 
         function move() {
+            // TODO call snake.move() before ground.checkCollision()
             var nextMove = snake.determineNextMove();
             var state = ground.checkCollision(nextMove);
 
-            if (state == $game.GOOD_STATE)
+            if (state == $game.GOOD_STATE) {
                 snake.move(nextMove);
+            }
             else if (state == $game.FOOD_STATE) {
-                score += 100
-                snake.addSquare(nextMove);
+                score += 100;
+                snake.growSnake(nextMove);
                 food.respawn(snake.getPositionArr());
+                console.log('Score: ' + score);
             }
             else if (state == $game.BAD_STATE) {
                 gameOver();
-                console.log("Game Over");
             }
             else
                 throw "This is not a valid state '" + state + "'";
 
             ground.refresh(snake.getPositionArr(), food.getPosition());
-            console.log('Score: ' + score);
-            ground.print();
+            //ground.print();
             //snake.print();
+
+            draw.paint(snake.getPositionArr(), food.getPosition());
         }
     };
 }

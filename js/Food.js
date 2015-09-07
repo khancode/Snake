@@ -7,6 +7,10 @@ var $food = new Food();
 /* All functions reside in Food() for encapsulation */
 function Food()
 {
+    // TODO need to set LOWER_BOUND and UPPER_BOUND from Draw.js global values
+    var LOWER_BOUND = 0;
+    var UPPER_BOUND = 34;
+
     /* Creates new object for food */
     this.Create = function() {
 
@@ -16,24 +20,21 @@ function Food()
         init();
 
         function init() {
-            x = 2;
-            y = 2;
-
-            console.log('food initialized! :D');
+            x = Math.floor((Math.random() * UPPER_BOUND) + LOWER_BOUND);
+            y = Math.floor((Math.random() * UPPER_BOUND) + LOWER_BOUND);
         }
 
         this.respawn = function(snakePositionArr) {
-
-            var lowerBound = 0;
-            var upperBound = 9;
-
             var newX;
             var newY;
-            var validPosition = true;
+            var validPosition;
+
             do
             {
-                newX = Math.floor((Math.random() * upperBound) + lowerBound);
-                newY = Math.floor((Math.random() * upperBound) + lowerBound);
+                validPosition = true;
+
+                newX = Math.floor((Math.random() * UPPER_BOUND) + LOWER_BOUND);
+                newY = Math.floor((Math.random() * UPPER_BOUND) + LOWER_BOUND);
 
                 for (var i in snakePositionArr) {
                     var pos = snakePositionArr[i];
@@ -43,7 +44,6 @@ function Food()
                         break;
                     }
                 }
-
             } while (validPosition == false);
 
             x = newX;

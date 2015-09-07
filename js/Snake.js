@@ -88,14 +88,10 @@ function Snake()
             head.setY(newHeadPosition.y);
         };
 
-        this.addSquare = function(newHeadPosition) {
+        this.growSnake = function (newHeadPosition) {
             var newHead = new Square(newHeadPosition.x, newHeadPosition.y);
 
-            head.setPrev(newHead);
-            newHead.setPrev(null);
-            newHead.setNext(head);
-
-            head = newHead;
+            push(newHead);
         };
 
         function dequeue() {

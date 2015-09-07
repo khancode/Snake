@@ -7,8 +7,9 @@ var $ground = new Ground();
 /* All functions reside in Ground() for encapsulation */
 function Ground()
 {
-    var LENGTH = 10;
-    var WIDTH = 10;
+    // TODO need to set LENGTH and WIDTH from Draw.js global values
+    var LENGTH = 35;
+    var WIDTH = 35;
 
     var SNAKE = 'S';
     var FOOD = 'F';
@@ -37,7 +38,7 @@ function Ground()
         this.checkCollision = function(position) {
             var state;
 
-            if (position.x < 0 || position.x > 9 || position.y < 0 || position.y > 9)
+            if (position.x < 0 || position.x > LENGTH - 1 || position.y < 0 || position.y > WIDTH - 1)
                 state = WALL;
             else
                 state = gridArr[position.x][position.y];
